@@ -17,5 +17,13 @@ namespace Proiect_.NET_Hair_salon.Data
         public DbSet<Proiect_.NET_Hair_salon.Models.Serviciu> Serviciu { get; set; } = default!;
 
         public DbSet<Proiect_.NET_Hair_salon.Models.Hairstylist> Hairstylist { get; set; }
+
+        public DbSet<Proiect_.NET_Hair_salon.Models.CategorieServiciu> CategorieServiciu { get; set; }
+
+        public DbSet<Proiect_.NET_Hair_salon.Models.Categorie> Categorie { get; set; }
+
+        public DbSet<Proiect_.NET_Hair_salon.Models.Membru> Membru { get; set; }
+
+        public DbSet<Proiect_.NET_Hair_salon.Models.Programare> Programare { get; set; }
     }
 }

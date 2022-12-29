@@ -11,7 +11,7 @@ using Proiect_.NET_Hair_salon.Models;
 
 namespace Proiect_.NET_Hair_salon.Pages.Servicii
 {
-    public class EditModel : PageModel
+    public class EditModel : ServiciuCategoriiPageModel
     {
         private readonly Proiect_.NET_Hair_salon.Data.Proiect_NET_Hair_salonContext _context;
 
@@ -30,18 +30,30 @@ namespace Proiect_.NET_Hair_salon.Pages.Servicii
                 return NotFound();
             }
 
-            var serviciu =  await _context.Serviciu.FirstOrDefaultAsync(m => m.ID == id);
-            if (serviciu == null)
+            Serviciu =  await _context.Serviciu
+                .Include(b=>b.Hairstylist)
+                .Include(b=>b.CategoriiServiciu).ThenInclude(b=>b.Categorie)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.ID == id);
+            
+            if (Serviciu == null)
             {
                 return NotFound();
             }
-            Serviciu = serviciu;
-            ViewData["HairstylistID"] = new SelectList(_context.Set<Hairstylist>(), "ID", "Nume");
+
+            PopulateAssignedCategoryData(_context, Serviciu);
+
+            var hairstylistList = _context.Hairstylist.Select(x => new
+            {
+                x.ID,
+                FullName = x.Nume + " " + x.Prenume
+            });
+            //ViewData["HairstylistID"] = new SelectList(_context.Set<Hairstylist>(), "ID", "FullName");
+            ViewData["HairstylistID"] = new SelectList(hairstylistList, "ID", "FullName");
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
+        /*
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -73,6 +85,38 @@ namespace Proiect_.NET_Hair_salon.Pages.Servicii
         private bool ServiciuExists(int id)
         {
           return _context.Serviciu.Any(e => e.ID == id);
+        }
+        */
+
+        public async Task<IActionResult> OnPostAsync(int? id, string[] selectateCategorii)
+        {
+            if(id == null)
+            {
+                return NotFound();
+            }
+
+            var serviciuToUpdate = await _context.Serviciu
+                .Include(i => i.Hairstylist)
+                .Include(i => i.CategoriiServiciu)
+                    .ThenInclude(i => i.Categorie)
+                .FirstOrDefaultAsync(s => s.ID == id);
+            if(serviciuToUpdate == null)
+            {
+                return NotFound();
+            }
+
+            if(await TryUpdateModelAsync<Serviciu>(
+                serviciuToUpdate,
+                "Serviciu",
+                i=>i.Nume, i=>i.Pret, i=>i.Durata, i=>i.HairstylistID))
+            {
+                UpdateServiciuCategorii(_context, selectateCategorii, serviciuToUpdate);
+                await _context.SaveChangesAsync();
+                return RedirectToPage("./Index");
+            }
+            UpdateServiciuCategorii(_context, selectateCategorii, serviciuToUpdate);
+            PopulateAssignedCategoryData(_context, serviciuToUpdate);
+            return Page();
         }
     }
 }

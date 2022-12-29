@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Proiect_.NET_Hair_salon.Data;
 
@@ -11,9 +12,10 @@ using Proiect_.NET_Hair_salon.Data;
 namespace Proiect_.NET_Hair_salon.Migrations
 {
     [DbContext(typeof(Proiect_NET_Hair_salonContext))]
-    partial class Proiect_NET_Hair_salonContextModelSnapshot : ModelSnapshot
+    [Migration("20221228152517_Programari")]
+    partial class Programari
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,58 +85,6 @@ namespace Proiect_.NET_Hair_salon.Migrations
                     b.ToTable("Hairstylist");
                 });
 
-            modelBuilder.Entity("Proiect_.NET_Hair_salon.Models.Membru", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Nume")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Prenume")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Telefon")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Membru");
-                });
-
-            modelBuilder.Entity("Proiect_.NET_Hair_salon.Models.Programare", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
-
-                    b.Property<int?>("MembruID")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("OraProgramare")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("ServiciuID")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("MembruID");
-
-                    b.HasIndex("ServiciuID");
-
-                    b.ToTable("Programare");
-                });
-
             modelBuilder.Entity("Proiect_.NET_Hair_salon.Models.Serviciu", b =>
                 {
                     b.Property<int>("ID")
@@ -182,21 +132,6 @@ namespace Proiect_.NET_Hair_salon.Migrations
                     b.Navigation("Serviciu");
                 });
 
-            modelBuilder.Entity("Proiect_.NET_Hair_salon.Models.Programare", b =>
-                {
-                    b.HasOne("Proiect_.NET_Hair_salon.Models.Membru", "Membru")
-                        .WithMany("Programari")
-                        .HasForeignKey("MembruID");
-
-                    b.HasOne("Proiect_.NET_Hair_salon.Models.Serviciu", "Serviciu")
-                        .WithMany()
-                        .HasForeignKey("ServiciuID");
-
-                    b.Navigation("Membru");
-
-                    b.Navigation("Serviciu");
-                });
-
             modelBuilder.Entity("Proiect_.NET_Hair_salon.Models.Serviciu", b =>
                 {
                     b.HasOne("Proiect_.NET_Hair_salon.Models.Hairstylist", "Hairstylist")
@@ -214,11 +149,6 @@ namespace Proiect_.NET_Hair_salon.Migrations
             modelBuilder.Entity("Proiect_.NET_Hair_salon.Models.Hairstylist", b =>
                 {
                     b.Navigation("Servicii");
-                });
-
-            modelBuilder.Entity("Proiect_.NET_Hair_salon.Models.Membru", b =>
-                {
-                    b.Navigation("Programari");
                 });
 
             modelBuilder.Entity("Proiect_.NET_Hair_salon.Models.Serviciu", b =>

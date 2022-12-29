@@ -4,7 +4,6 @@
     {
         public int ID { get; set; }
         public string NumeCategorie { get; set; }
-
         public ICollection<CategorieServiciu>? CategoriiServiciu { get; set; }
     }
 }

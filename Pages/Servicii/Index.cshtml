@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "/"
 @model Proiect_.NET_Hair_salon.Pages.Servicii.IndexModel
 
 @{
@@ -23,17 +23,23 @@
                 @Html.DisplayNameFor(model => model.Serviciu[0].Durata)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Serviciu[0].Hairstylist.Nume)
+                @Html.DisplayNameFor(model => model.Serviciu[0].Hairstylist.NumeComplet)
             </th>
+
             <th>
-                @Html.DisplayNameFor(model => model.Serviciu[0].Hairstylist.Prenume)
+                @Html.DisplayNameFor(model => model.Serviciu[0].CategoriiServiciu)
             </th>
+
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Serviciu) {
-        <tr>
+@foreach (var item in Model.ServiciuD.Servicii) {
+            string selectedRow = "";
+            if(item.ID == Model.ServiciuID){
+                selectedRow = "table-succes";
+            }
+        <tr class="@selectedRow">
             <td>
                 @Html.DisplayFor(modelItem => item.Nume)
             </td>
@@ -43,12 +49,20 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Durata)
             </td>
+
             <td>
-                @Html.DisplayFor(modelItem => item.Hairstylist.Nume)
+                @Html.DisplayFor(modelItem => item.Hairstylist.NumeComplet)
             </td>
+
             <td>
-                @Html.DisplayFor(modelItem => item.Hairstylist.Prenume)
+                @{
+                    foreach(var categorie in item.CategoriiServiciu)
+                    {
+                        @categorie.Categorie.ID @: @categorie.Categorie.NumeCategorie <br/>
+                    }
+                }
             </td>
+
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |

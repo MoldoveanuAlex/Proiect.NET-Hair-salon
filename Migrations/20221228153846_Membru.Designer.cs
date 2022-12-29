@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Proiect_.NET_Hair_salon.Data;
 
@@ -11,9 +12,10 @@ using Proiect_.NET_Hair_salon.Data;
 namespace Proiect_.NET_Hair_salon.Migrations
 {
     [DbContext(typeof(Proiect_NET_Hair_salonContext))]
-    partial class Proiect_NET_Hair_salonContextModelSnapshot : ModelSnapshot
+    [Migration("20221228153846_Membru")]
+    partial class Membru
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -95,8 +97,8 @@ namespace Proiect_.NET_Hair_salon.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Nume")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("Nume")
+                        .HasColumnType("int");
 
                     b.Property<string>("Prenume")
                         .HasColumnType("nvarchar(max)");

@@ -20,12 +20,36 @@ namespace Proiect_.NET_Hair_salon.Pages.Servicii
         }
 
         public IList<Serviciu> Serviciu { get;set; } = default!;
-
+        public ServiciuData ServiciuD { get; set; }
+        public int ServiciuID { get; set; }
+        public int CategorieID { get; set; }
+        /*
         public async Task OnGetAsync()
         {
             Serviciu = await _context.Serviciu
                 .Include(b=>b.Hairstylist)
                 .ToListAsync();
+        }
+        */
+
+        public async Task OnGetAsync(int? id, int? categorieID)
+        {
+            ServiciuD = new ServiciuData();
+            ServiciuD.Servicii = await _context.Serviciu
+                .Include(b => b.Hairstylist)
+                .Include(b => b.CategoriiServiciu)
+                .ThenInclude(b => b.Categorie)
+                .AsNoTracking()
+                .OrderBy(b => b.Nume)
+                .ToListAsync();
+
+            if(id != null)
+            {
+                ServiciuID = id.Value;
+                Serviciu serviciu = ServiciuD.Servicii
+                    .Where(i => i.ID == id.Value).Single();
+                ServiciuD.Categorii = serviciu.CategoriiServiciu.Select(s => s.Categorie);
+            }
         }
     }
 }
