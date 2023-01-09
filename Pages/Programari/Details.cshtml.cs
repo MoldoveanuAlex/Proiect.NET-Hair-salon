@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Proiect_.NET_Hair_salon.Data;
 using Proiect_.NET_Hair_salon.Models;
@@ -28,7 +29,11 @@ namespace Proiect_.NET_Hair_salon.Pages.Programari
                 return NotFound();
             }
 
-            var programare = await _context.Programare.FirstOrDefaultAsync(m => m.ID == id);
+            var programare = await _context.Programare
+                .Include(b=>b.Membru)
+                .Include(b=>b.Serviciu)
+                .Include(b=>b.Serviciu.Hairstylist)
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (programare == null)
             {
                 return NotFound();
@@ -37,6 +42,7 @@ namespace Proiect_.NET_Hair_salon.Pages.Programari
             {
                 Programare = programare;
             }
+
             return Page();
         }
     }

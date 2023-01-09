@@ -8,7 +8,7 @@ namespace Proiect_.NET_Hair_salon.Models
         public int ID { get; set; }
         public string Prenume { get; set; }
         public string Nume { get; set; }
-        [Display(Name = "NumeComplet")]
+        [Display(Name = "Nume hairstylist")]
         public string? NumeComplet
         {
             get

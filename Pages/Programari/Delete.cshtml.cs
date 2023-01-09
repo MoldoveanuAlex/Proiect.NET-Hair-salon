@@ -29,7 +29,11 @@ namespace Proiect_.NET_Hair_salon.Pages.Programari
                 return NotFound();
             }
 
-            var programare = await _context.Programare.FirstOrDefaultAsync(m => m.ID == id);
+            var programare = await _context.Programare
+                            .Include(b => b.Membru)
+                            .Include(b => b.Serviciu)
+                            .Include(b => b.Serviciu.Hairstylist)
+                            .FirstOrDefaultAsync(m => m.ID == id);
 
             if (programare == null)
             {
