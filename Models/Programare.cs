@@ -11,6 +11,8 @@ namespace Proiect_.NET_Hair_salon.Models
         public Serviciu? Serviciu { get; set; }
 
         [DataType(DataType.DateTime)]
+        [Display(Name = "Ora programare")]
+
         public DateTime OraProgramare { get; set; }
     }
 }

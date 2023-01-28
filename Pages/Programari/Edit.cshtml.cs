@@ -36,8 +36,17 @@ namespace Proiect_.NET_Hair_salon.Pages.Programari
                 return NotFound();
             }
             Programare = programare;
-           ViewData["MembruID"] = new SelectList(_context.Membru, "ID", "ID");
-           ViewData["ServiciuID"] = new SelectList(_context.Serviciu, "ID", "ID");
+
+            var serviciuList = _context.Serviciu
+                .Include(b => b.Hairstylist)
+                .Select(x => new
+                {
+                    x.ID,
+                    ServiciuFullName = x.Nume + " by " + x.Hairstylist.Nume + " " + x.Hairstylist.Prenume
+                });
+            ViewData["ServiciuID"] = new SelectList(serviciuList, "ID", "ServiciuFullName");
+
+            ViewData["MembruID"] = new SelectList(_context.Membru, "ID", "NumeComplet");
             return Page();
         }
 

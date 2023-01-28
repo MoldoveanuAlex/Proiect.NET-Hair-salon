@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +12,7 @@ using Proiect_.NET_Hair_salon.Models;
 
 namespace Proiect_.NET_Hair_salon.Pages.Servicii
 {
+    [Authorize(Roles = "Admin")]
     public class DeleteModel : PageModel
     {
         private readonly Proiect_.NET_Hair_salon.Data.Proiect_NET_Hair_salonContext _context;

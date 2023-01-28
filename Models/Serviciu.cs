@@ -7,6 +7,7 @@ namespace Proiect_.NET_Hair_salon.Models
         public int ID { get; set; }
 
         [Display(Name = "Nume serviciu")]
+        [Required]
         public string Nume { get; set; }
 
         public int Pret { get; set; }
