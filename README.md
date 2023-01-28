@@ -1,8 +1,8 @@
-.NET web application created to facilitate the smooth running of a barber shop business.
+.NET web application created to facilitate the smooth running of a barber shop business.  
 
-Implemented functionalities:
-  /n -Authentication and authorization;
-  -CRUD on all entities using Entity Framework;
-  -input validation (RegEx)
+Implemented functionalities:  
+  -Authentication and authorization;  
+  -CRUD on all entities using Entity Framework;  
+  -input validation (RegEx)  
  
 The display language of the app is Romanian.
