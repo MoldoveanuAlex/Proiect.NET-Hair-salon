@@ -1,7 +1,7 @@
 .NET web application created to facilitate the smooth running of a barber shop business.
 
 Implemented functionalities:
-  -Authentication and authorization;
+  /n -Authentication and authorization;
   -CRUD on all entities using Entity Framework;
   -input validation (RegEx)
  
